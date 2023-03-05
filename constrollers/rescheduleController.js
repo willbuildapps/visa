@@ -10,7 +10,7 @@ exports.reschedule = async (req, res, next) => {
     const { email, password, } = req.body
 
     const browser = await puppeteer.launch({
-        headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"]
+        headless: true, executablePath: executablePath(), args: ["--no-sandbox", "--disable-setuid-sandbox"]
     })
 
     const page = await browser.newPage()
@@ -130,7 +130,7 @@ exports.reschedule = async (req, res, next) => {
 const rescheduleJob = async () => {
 
     const browser = await puppeteer.launch({
-        headless: true, args: ["--no-sandbox", "--disable-setuid-sandbox"]
+        headless: true, executablePath: executablePath(), args: ["--no-sandbox", "--disable-setuid-sandbox"]
     })
 
     const page = await browser.newPage()
