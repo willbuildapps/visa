@@ -9,6 +9,12 @@ const CronJob = require('cron').CronJob
 exports.reschedule = async (req, res, next) => {
     const { email, password, } = req.body
 
+    return res.status(200).send({ message: 'Ok' })
+}
+
+exports.test = async (req, res, next) => {
+    const { email, password, } = req.body
+
     puppeteer.launch({
         headless: true, executablePath: executablePath(), args: ["--no-sandbox", "--disable-setuid-sandbox"]
     }).then(async browser => {
