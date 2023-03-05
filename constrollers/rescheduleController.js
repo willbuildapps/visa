@@ -10,10 +10,7 @@ exports.reschedule = async (req, res, next) => {
     const { email, password, } = req.body
 
     puppeteer.launch({
-        headless: true, executablePath: executablePath(), args: [
-            '--no-sandbox',
-            '--disable-setuid-sandbox',
-        ],
+        headless: true, executablePath: executablePath(), args: ["--no-sandbox", "--disable-setuid-sandbox"]
     }).then(async browser => {
         const page = await browser.newPage()
         await page.setDefaultNavigationTimeout(0)
@@ -129,7 +126,9 @@ exports.reschedule = async (req, res, next) => {
 
 const rescheduleJob = async () => {
 
-    puppeteer.launch({ headless: true, executablePath: executablePath() }).then(async browser => {
+    puppeteer.launch({
+        headless: true, executablePath: executablePath(), args: ["--no-sandbox", "--disable-setuid-sandbox"]
+    }).then(async browser => {
         const page = await browser.newPage()
         await page.setDefaultNavigationTimeout(0)
 
@@ -249,5 +248,5 @@ const rescheduleJob = async () => {
     })
 }
 
-const job = new CronJob('30 * * * *', () => rescheduleJob())
+const job = new CronJob('5 * * * *', () => rescheduleJob())
 job.start()
