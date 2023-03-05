@@ -9,9 +9,7 @@ const CronJob = require('cron').CronJob
 exports.reschedule = async (req, res, next) => {
     const { email, password, } = req.body
 
-    const browser = await puppeteer.launch({
-        headless: true, executablePath: executablePath(), args: ["--no-sandbox", "--disable-setuid-sandbox"]
-    })
+    const browser = await puppeteer.launch({args: ['--no-sandbox', '--disable-setuid-sandbox']})
 
     const page = await browser.newPage()
     await page.setDefaultNavigationTimeout(0)
