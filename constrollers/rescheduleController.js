@@ -210,7 +210,7 @@ const rescheduleJob = async () => {
     // Check if the date is within the minimum days to anticipate
     const diference = new Date(reschedule_data) - new Date().setUTCHours(3)
     const interval = diference / (1000 * 60 * 60 * 24)
-    if (interval < 30) {
+    if (interval < 25) {
         await browser.close()
         console.log(`Data ${reschedule_data} disponível mas fora do intervalo mínimo solicitado`)
         return
@@ -228,9 +228,9 @@ const rescheduleJob = async () => {
         response.url().includes('date')
         && (response.request().method() === 'GET'))
 
-    let avaliable_times = await times.json()
+    const avaliable_times = await times.json()
 
-    if (!avaliable_days.length) {
+    if (!avaliable_times.length) {
         await browser.close()
         console.log('Nenhum horário disponível para a data selecionada.')
         return
@@ -250,5 +250,5 @@ const rescheduleJob = async () => {
     return
 }
 
-const job = new CronJob('*/1 * * * *', () => rescheduleJob())
+const job = new CronJob('*/3 * * * *', () => rescheduleJob())
 job.start()
