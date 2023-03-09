@@ -250,5 +250,5 @@ const rescheduleJob = async () => {
     return
 }
 
-const job = new CronJob('*/1 * * * *', () => rescheduleJob())
+const job = new CronJob(`*/${process.env.TIME} * * * *`, () => rescheduleJob())
 job.start()
