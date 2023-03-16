@@ -6,6 +6,11 @@ const { tableParser } = require('puppeteer-table-parser')
 const moment = require('moment')
 const CronJob = require('cron').CronJob
 
+const FREQUENCE = String(process.env.FREQUENCE) 
+const EMAIL = String(process.env.EMAIL)
+const PASSWORD = String(process.env.PASSWORD)
+const INTERVAL = Number(process.env.INTERVAL) 
+
 const rescheduleJob = async () => {
 
     const browser = await puppeteer.launch({
@@ -20,8 +25,8 @@ const rescheduleJob = async () => {
     await page.waitForTimeout(2000)
 
     // User authentication 
-    await page.type('#user_email', process.env.EMAIL)
-    await page.type('#user_password', process.env.PASSWORD)
+    await page.type('#user_email', EMAIL)
+    await page.type('#user_password', PASSWORD)
     await page.click('#policy_confirmed')
     await page.click('.button')
 
@@ -90,7 +95,7 @@ const rescheduleJob = async () => {
     // Check if the date is within the minimum days to anticipate
     const diference = new Date(reschedule_data) - new Date().setUTCHours(3)
     const interval = diference / (1000 * 60 * 60 * 24)
-    if (interval < 25) {
+    if (interval < INTERVAL) {
         await browser.close()
         console.log(`Data ${reschedule_data} disponível mas fora do intervalo mínimo solicitado`)
         return
@@ -130,5 +135,5 @@ const rescheduleJob = async () => {
     return
 }
 
-const job = new CronJob(`*/${process.env.TIME} * * * *`, () => rescheduleJob())
+const job = new CronJob(`*/${FREQUENCE} * * * *`, () => rescheduleJob())
 job.start()
